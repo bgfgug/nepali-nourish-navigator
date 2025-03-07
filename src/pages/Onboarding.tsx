@@ -1,90 +1,110 @@
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import OnboardingSlide from "@/components/onboarding/OnboardingSlide";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { OnboardingSlide } from "@/components/onboarding/OnboardingSlide";
 
-const onboardingData = [
+const slides = [
   {
-    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    title: "Discover Local Cuisine",
-    description: "Explore the finest Nepali dishes from local restaurants right at your fingertips."
+    id: 1,
+    title: "Discover Local Nepali Cuisine",
+    description: "Find authentic Nepali restaurants and dishes near you",
+    imageSrc: "https://images.unsplash.com/photo-1530062845289-9109b2c9c868?q=80&w=1000",
+    imageAlt: "Nepali food variety",
   },
   {
-    image: "https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    title: "Quick Delivery",
-    description: "Our delivery partners ensure your food arrives fresh and hot, every single time."
+    id: 2,
+    title: "Quick Delivery to Your Doorstep",
+    description: "Our delivery partners bring food right to your home",
+    imageSrc: "https://images.unsplash.com/photo-1526367790999-0150786686a2?q=80&w=1000",
+    imageAlt: "Food delivery on bike",
   },
   {
-    image: "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-    title: "Special Offers",
-    description: "Enjoy exclusive deals and discounts on your favorite restaurants and dishes."
+    id: 3,
+    title: "Support Local Businesses",
+    description: "Help local restaurants thrive by ordering their specialties",
+    imageSrc: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1000",
+    imageAlt: "Local restaurant",
   }
 ];
 
-const Onboarding: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+const Onboarding = () => {
   const navigate = useNavigate();
-
-  // Auto advance slides every 5 seconds
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // Auto advance slides
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === onboardingData.length - 1 ? 0 : prev + 1));
+      if (currentSlide < slides.length - 1) {
+        setCurrentSlide(prev => prev + 1);
+      }
     }, 5000);
-
+    
     return () => clearInterval(interval);
-  }, []);
-
+  }, [currentSlide]);
+  
+  const handleNext = () => {
+    if (currentSlide < slides.length - 1) {
+      setCurrentSlide(prev => prev + 1);
+    } else {
+      navigate("/login");
+    }
+  };
+  
   const handleSkip = () => {
-    localStorage.setItem("hasSeenOnboarding", "true");
     navigate("/login");
   };
 
-  const handleNext = () => {
-    if (currentSlide === onboardingData.length - 1) {
-      localStorage.setItem("hasSeenOnboarding", "true");
-      navigate("/login");
-    } else {
-      setCurrentSlide(currentSlide + 1);
-    }
-  };
-
   return (
-    <div className="h-screen w-full relative overflow-hidden bg-white dark:bg-black">
-      {/* Slides */}
-      {onboardingData.map((slide, index) => (
-        <OnboardingSlide
-          key={index}
-          image={slide.image}
-          title={slide.title}
-          description={slide.description}
-          isActive={currentSlide === index}
-        />
-      ))}
-
-      {/* Navigation dots */}
-      <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-        {onboardingData.map((_, index) => (
-          <button
-            key={index}
-            className={`h-2 rounded-full transition-all ${
-              currentSlide === index
-                ? "w-6 bg-ghar-red"
-                : "w-2 bg-gray-300 dark:bg-gray-600"
-            }`}
-            onClick={() => setCurrentSlide(index)}
+    <div className="min-h-screen flex flex-col">
+      <AnimatePresence mode="wait">
+        <motion.div 
+          key={currentSlide}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex-1 relative"
+        >
+          <OnboardingSlide
+            title={slides[currentSlide].title}
+            description={slides[currentSlide].description}
+            imageSrc={slides[currentSlide].imageSrc}
+            imageAlt={slides[currentSlide].imageAlt}
           />
-        ))}
-      </div>
-
-      {/* Buttons */}
-      <div className="absolute bottom-16 w-full flex justify-between px-6 z-20">
-        <Button variant="ghost" onClick={handleSkip}>
-          Skip
-        </Button>
-        <Button onClick={handleNext}>
-          {currentSlide === onboardingData.length - 1 ? "Get Started" : "Next"}
-        </Button>
+        </motion.div>
+      </AnimatePresence>
+      
+      <div className="p-6 flex flex-col gap-4">
+        <div className="flex justify-center gap-2 mb-4">
+          {slides.map((_, index) => (
+            <div 
+              key={index} 
+              className={`h-2 rounded-full transition-all ${
+                index === currentSlide 
+                  ? "w-8 bg-primary" 
+                  : "w-2 bg-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+        
+        <div className="flex gap-4">
+          <Button 
+            variant="outline" 
+            className="flex-1" 
+            onClick={handleSkip}
+          >
+            Skip
+          </Button>
+          <Button 
+            className="flex-1 bg-primary hover:bg-primary/90" 
+            onClick={handleNext}
+          >
+            {currentSlide < slides.length - 1 ? "Next" : "Get Started"}
+          </Button>
+        </div>
       </div>
     </div>
   );
