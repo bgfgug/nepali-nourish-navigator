@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { TopAppBar } from "@/components/layout/TopAppBar";
@@ -95,7 +94,7 @@ const RestaurantDetail = () => {
       if (existingItem && existingItem.quantity > 1) {
         return prev.map(item => 
           item.id === itemId 
-            ? { ...item, quantity: item.quantity -, 1 } 
+            ? { ...item, quantity: item.quantity - 1 } 
             : item
         );
       } else {
