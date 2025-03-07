@@ -6,10 +6,11 @@ import ThemeToggle from "../common/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 interface TopAppBarProps {
+  hideSearch?: boolean;
   className?: string;
 }
 
-const TopAppBar: React.FC<TopAppBarProps> = ({ className }) => {
+const TopAppBar: React.FC<TopAppBarProps> = ({ hideSearch = false, className }) => {
   const [location, setLocation] = useState("Kathmandu, Nepal");
   const [isLocationOpen, setIsLocationOpen] = useState(false);
 
@@ -30,7 +31,7 @@ const TopAppBar: React.FC<TopAppBarProps> = ({ className }) => {
             className="flex items-center text-left font-normal"
             onClick={() => setIsLocationOpen(!isLocationOpen)}
           >
-            <MapPin className="mr-1 text-ghar-red" size={18} />
+            <MapPin className="mr-1 text-red-500" size={18} />
             <span className="truncate max-w-[150px]">{location}</span>
             <ChevronDown
               size={18}
@@ -41,7 +42,7 @@ const TopAppBar: React.FC<TopAppBarProps> = ({ className }) => {
           </Button>
 
           {isLocationOpen && (
-            <div className="absolute top-full left-0 mt-1 w-64 bg-white dark:bg-gray-800 shadow-lg rounded-md z-50 overflow-hidden animate-fade-in">
+            <div className="absolute top-full left-0 mt-1 w-64 bg-white dark:bg-gray-800 shadow-lg rounded-md z-50 overflow-hidden animate-in fade-in">
               {locations.map((loc) => (
                 <button
                   key={loc}

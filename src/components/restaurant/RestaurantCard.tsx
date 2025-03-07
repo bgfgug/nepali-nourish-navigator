@@ -8,9 +8,11 @@ interface RestaurantCardProps {
   id: string;
   name: string;
   image: string;
-  cuisine: string;
+  cuisines: string[];
   rating: number;
+  priceRange: string;
   deliveryTime: string;
+  distance: string;
   className?: string;
 }
 
@@ -18,9 +20,11 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({
   id,
   name,
   image,
-  cuisine,
+  cuisines,
   rating,
+  priceRange,
   deliveryTime,
+  distance,
   className,
 }) => {
   const navigate = useNavigate();
@@ -28,7 +32,7 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({
   return (
     <div 
       className={cn(
-        "rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-sm card-hover",
+        "rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer",
         className
       )}
       onClick={() => navigate(`/restaurant/${id}`)}
@@ -45,11 +49,14 @@ const RestaurantCard: React.FC<RestaurantCardProps> = ({
         </div>
       </div>
       <div className="p-4">
-        <h3 className="font-bold text-lg mb-1 text-ghar-dark dark:text-white">{name}</h3>
-        <p className="text-ghar-text-gray dark:text-gray-400 text-sm mb-2">{cuisine}</p>
-        <div className="flex items-center text-ghar-text-gray dark:text-gray-400 text-sm">
-          <Clock size={14} className="mr-1" />
-          <span>{deliveryTime}</span>
+        <h3 className="font-bold text-lg mb-1 text-gray-900 dark:text-white">{name}</h3>
+        <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{cuisines.join(", ")}</p>
+        <div className="flex items-center justify-between text-gray-600 dark:text-gray-400 text-sm">
+          <div className="flex items-center">
+            <Clock size={14} className="mr-1" />
+            <span>{deliveryTime}</span>
+          </div>
+          <span>{distance}</span>
         </div>
       </div>
     </div>
