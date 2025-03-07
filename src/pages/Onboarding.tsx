@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { OnboardingSlide } from "@/components/onboarding/OnboardingSlide";
+import OnboardingSlide from "@/components/onboarding/OnboardingSlide";
 
 const slides = [
   {
@@ -33,7 +32,6 @@ const Onboarding = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   
-  // Auto advance slides
   useEffect(() => {
     const interval = setInterval(() => {
       if (currentSlide < slides.length - 1) {

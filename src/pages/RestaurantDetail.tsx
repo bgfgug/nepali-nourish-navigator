@@ -1,7 +1,8 @@
+
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { TopAppBar } from "@/components/layout/TopAppBar";
-import { BottomNav } from "@/components/layout/BottomNav";
+import TopAppBar from "@/components/layout/TopAppBar";
+import BottomNav from "@/components/layout/BottomNav";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";

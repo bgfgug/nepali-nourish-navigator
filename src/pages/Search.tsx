@@ -1,11 +1,11 @@
 
 import { useState } from "react";
-import { TopAppBar } from "@/components/layout/TopAppBar";
-import { BottomNav } from "@/components/layout/BottomNav";
+import TopAppBar from "@/components/layout/TopAppBar";
+import BottomNav from "@/components/layout/BottomNav";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { RestaurantCard } from "@/components/restaurant/RestaurantCard";
-import { RestaurantCardSkeleton } from "@/components/restaurant/RestaurantCardSkeleton";
+import RestaurantCard from "@/components/restaurant/RestaurantCard";
+import RestaurantCardSkeleton from "@/components/restaurant/RestaurantCardSkeleton";
 import { Search as SearchIcon, X } from "lucide-react";
 
 const mockSearchResults = [

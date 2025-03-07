@@ -1,11 +1,10 @@
-
 import { useState, useEffect } from "react";
-import { TopAppBar } from "@/components/layout/TopAppBar";
-import { BottomNav } from "@/components/layout/BottomNav";
-import { CategorySection } from "@/components/home/CategorySection";
-import { OffersSection } from "@/components/home/OffersSection";
-import { RestaurantCard } from "@/components/restaurant/RestaurantCard";
-import { RestaurantCardSkeleton } from "@/components/restaurant/RestaurantCardSkeleton";
+import TopAppBar from "@/components/layout/TopAppBar";
+import BottomNav from "@/components/layout/BottomNav";
+import CategorySection from "@/components/home/CategorySection";
+import OffersSection from "@/components/home/OffersSection";
+import RestaurantCard from "@/components/restaurant/RestaurantCard";
+import RestaurantCardSkeleton from "@/components/restaurant/RestaurantCardSkeleton";
 
 // Mock data for restaurants
 const mockRestaurants = [
